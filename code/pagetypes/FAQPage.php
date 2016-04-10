@@ -208,8 +208,9 @@ class FAQPage extends Page
  */
 class FAQPage_Controller extends Page_Controller
 {
-    private static $allowed_actions = array('view');
-
+    private static $allowed_actions = array(
+        'view'
+    );
 
     /**
      * How many search results should be shown per-page?
@@ -224,12 +225,17 @@ class FAQPage_Controller extends Page_Controller
      */
     public static $search_term_key = 'q';
     public static $search_category_key = 'c';
-    // We replace these keys with real data in the SearchResultsSummary before adding to the template.
+
+    /**
+     * We replace these keys with real data in the SearchResultsSummary before adding to the template.
+     */
     public static $search_results_summary_current_page_key = '%CurrentPage%';
     public static $search_results_summary_total_pages_key = '%TotalPages%';
     public static $search_results_summary_query_key = '%Query%';
 
-    // solr configuration
+    /**
+     * Solr configuration
+     */
     public static $search_index_class = 'FAQSearchIndex';
     public static $classes_to_search = array(
         array(
@@ -254,8 +260,8 @@ class FAQPage_Controller extends Page_Controller
 
     /**
      * Render individual view for FAQ
-  *
-     * @return FAQ|404 error if faq not found
+     *
+     * @return array|SS_HTTPResponse FAQ content or 404 error if FAQ not found
      */
     public function view()
     {
@@ -271,7 +277,7 @@ class FAQPage_Controller extends Page_Controller
 
     /**
      * Search function. Called from index() if we have a search term.
-  *
+     *
      * @return HTMLText search results template.
      */
     public function search()
@@ -318,7 +324,7 @@ class FAQPage_Controller extends Page_Controller
 
     /**
      * Builds a search query from a give search term.
-  *
+     *
      * @return SearchQuery
      */
     protected function getSearchQuery($keywords)
@@ -377,7 +383,7 @@ class FAQPage_Controller extends Page_Controller
 
     /**
      * Renders the search template from a given Solr search result, suggestion and search term.
-  *
+     *
      * @return HTMLText search results template.
      */
     protected function parseSearchResults($results, $suggestion, $keywords)
@@ -449,11 +455,10 @@ class FAQPage_Controller extends Page_Controller
         return $this->customise($renderData)->renderWith($templates);
     }
 
-
     /**
      * Makes a query link for the current page from a search term
      * Returns a URL with an empty search term if no query is passed
-  *
+     *
      * @return String  The URL for this search query
      */
     protected function makeQueryLink($query = null)

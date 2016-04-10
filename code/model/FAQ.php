@@ -7,6 +7,9 @@
  */
 class FAQ extends DataObject
 {
+
+    private static $singular_name = 'FAQ';
+
     private static $db = array(
         'Question' => 'Varchar(255)',
         'Answer' => 'HTMLText',
