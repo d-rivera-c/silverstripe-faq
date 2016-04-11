@@ -1,0 +1,20 @@
+TaxonomyTerm:
+  faqCategories:
+    Name: 'FAQ Categories'
+  access:
+    Name: Access
+    Parent: =>TaxonomyTerm.faqCategories
+  compliance:
+    Name: Compliance
+    Parent: =>TaxonomyTerm.faqCategories
+  other:
+    Name: Other
+    Parent: =>TaxonomyTerm.faqCategories
+FAQ:
+  faqInCategory:
+    Question: 'Question about categories?'
+    Answer: 'I have a category'
+    Category: =>TaxonomyTerm.compliance
+  faqNoCategory:
+    Question: 'Question about no category?'
+    Answer: 'No one knows'
