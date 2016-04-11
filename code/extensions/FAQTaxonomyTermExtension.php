@@ -47,7 +47,7 @@ class FAQTaxonomyTermExtension extends DataExtension
         // check if this matches filter
         $match = true;
         foreach ($filter as $key => $value) {
-            if (isset($this->owner->$key) && $this->owner->$key != $value) {
+            if (isset($this->owner->$key) && strtolower($this->owner->$key) != strtolower($value)) {
                 $match = false;
             }
         }
