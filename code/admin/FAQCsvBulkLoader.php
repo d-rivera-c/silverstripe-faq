@@ -30,8 +30,7 @@ class FAQCsvBulkLoader extends CsvBulkLoader
         // is this already html?
         if (preg_match("/<[^<a-zA-Z]+>/", $val) === 1 ) {
             $answer = $val;
-        }
-        else {
+        } else {
             $answer = '<p>' . nl2br(Convert::raw2xml($val)) . '</p>';
         }
 
