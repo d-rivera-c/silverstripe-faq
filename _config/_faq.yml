@@ -10,3 +10,6 @@ FAQSearchIndex:
 TaxonomyTerm:
   extensions:
     - FAQTaxonomyTermExtension
+    
+FAQ:
+  import_create_missing_category: false

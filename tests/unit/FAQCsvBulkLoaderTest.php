@@ -1,17 +1,20 @@
 <?php
-
 /**
+ * Tests basic functionality of FAQCsvBulkLoader
+ *
  * @package faq
  * @subpackage tests
  */
-class FAQCsvBulkLoaderTest extends SapphireTest {
+class FAQCsvBulkLoaderTest extends SapphireTest
+{
 
     protected static $fixture_file = 'FAQCsvBulkLoaderTest.yml';
 
     /**
      * Test category export will return blank instead of the default Object->toString() = className
      */
-    public function testCategoryExport() {
+    public function testCategoryExport()
+    {
         $callback = function ($category) {
             return $category->Name;
         };
@@ -27,5 +30,4 @@ class FAQCsvBulkLoaderTest extends SapphireTest {
         $this->assertEquals('', $noCategoryName, 'No category name is returned');
         $this->assertEquals('Compliance', $categoryName, 'Category name is populated');
     }
-
 }

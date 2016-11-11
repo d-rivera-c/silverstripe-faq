@@ -23,6 +23,14 @@ FAQ:
 
 See `FAQPage_Controller` to check more configurations available.
 
+###Default .yml configurations
+
+```yaml
+FAQ:
+  import_create_missing_category: false # if a cvs of FAQ is imported,
+                                        # in case the category is not found in the CMS, create it (default: false)
+```
+
 ## CMS
 
 On `FAQPage` there's a lot of text configurations available. All come with default text.

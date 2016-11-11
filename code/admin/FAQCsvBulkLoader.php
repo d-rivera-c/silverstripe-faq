@@ -27,9 +27,13 @@ class FAQCsvBulkLoader extends CsvBulkLoader
             return null;
         }
 
-        $category = $root->getChildDeep(array('Name' => trim($val)));
+        $shouldCreateCategories = Config::inst()->get('FAQ', 'import_create_missing_category');
+        $val = trim($val);
 
-        if ((!$category || !$category->exists()) && trim($val) && Config::inst()->get('FAQ', 'create_missing_category')) {
+        $category = $root->getChildDeep(array('Name' => $val));
+
+        // create category if it doesn't exists unless config stops it
+        if ($shouldCreateCategories && (!$category || !$category->exists()) && $val) {
             $category = new TaxonomyTerm(array(
                 'Name' => trim($val),
                 'ParentID' => $root->ID
@@ -41,6 +45,5 @@ class FAQCsvBulkLoader extends CsvBulkLoader
             $obj->CategoryID = $category->ID;
             $obj->write();
         }
-
     }
 }
