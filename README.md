@@ -24,7 +24,7 @@ and has its own file for stopwords and synonyms.
 
 ## Installation
 
-    composer require silverstripe/silverstripe-faq
+    composer require silverstripe/faq
 
 Run a database rebuild by visiting *http://yoursite.com/dev/build*. This will add the required database
 columns and tables for the module to function.
