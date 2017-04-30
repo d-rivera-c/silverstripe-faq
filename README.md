@@ -1,10 +1,10 @@
 # FAQ
 [![Build Status](https://api.travis-ci.org/silverstripe/silverstripe-faq.svg?branch=master)](https://travis-ci.org/silverstripe/silverstripe-faq)
-[![Latest Stable Version](https://poser.pugx.org/silverstripe/silverstripe-faq/version.svg)](https://github.com/silverstripe/silverstripe-faq/releases)
-[![Total Downloads](https://poser.pugx.org/silverstripe/silverstripe-faq/downloads.svg)](https://packagist.org/packages/silverstripe/silverstripe-faq)
-[![License](https://poser.pugx.org/silverstripe/silverstripe-faq/license.svg)](https://github.com/silverstripe/silverstripe-faq/blob/master/LICENSE.md)
-[![Dependency Status](https://www.versioneye.com/php/silverstripe:silverstripe-faq/badge.svg)](https://www.versioneye.com/php/silverstripe:silverstripe-faq)
-[![Reference Status](https://www.versioneye.com/php/silverstripe:silverstripe-faq/reference_badge.svg)](https://www.versioneye.com/php/silverstripe:silverstripe-faq/references)
+[![Latest Stable Version](https://img.shields.io/packagist/v/silverstripe/faq.svg)](https://github.com/silverstripe/silverstripe-faq/releases)
+[![Total Downloads](https://img.shields.io/packagist/dt/silverstripe/faq.svg)](https://packagist.org/packages/silverstripe/faq)
+[![License](https://img.shields.io/github/license/silverstripe/silverstripe-faq.svg)](https://github.com/silverstripe/silverstripe-faq/blob/master/LICENSE.md)
+[![Dependency Status](https://www.versioneye.com/php/silverstripe:faq/badge.svg)](https://www.versioneye.com/php/silverstripe:faq)
+[![Reference Status](https://www.versioneye.com/php/silverstripe:faq/reference_badge.svg)](https://www.versioneye.com/php/silverstripe:faq/references)
 
 ## Introduction
 
