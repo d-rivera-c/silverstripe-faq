@@ -24,11 +24,18 @@ and has its own file for stopwords and synonyms.
 
 ## Installation
 
-    composer install silverstripe/silverstripe-faq
+    composer require silverstripe/faq
 
 Run a database rebuild by visiting *http://yoursite.com/dev/build*. This will add the required database
 columns and tables for the module to function.
-Remember to do `Solr_Configure` and `Solr_ReIndex`.
+
+Ensure you have `silverstripe/fulltextsearch-localsolr` running (See this modules docs for starting local instance of Solr).
+
+Run the Solr related tasks:
+
+    $ ./framework/sake dev/tasks/Solr_Configure
+    $ ./framework/sake dev/tasks/Solr_ReIndex
+ 
 
 ##### If you are using CWP
 
