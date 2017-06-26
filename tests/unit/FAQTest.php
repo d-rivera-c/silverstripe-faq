@@ -15,8 +15,10 @@ class FAQTest extends SapphireTest
         $this->assertEquals('', $faq->getLink());
 
         // object created, should get a link
-        $faq1 = new FAQ(array('Question' => 'question 1',
-                              'Answer' => 'Milkyway chocolate bar'));
+        $faq1 = new FAQ(array(
+            'Question' => 'question 1',
+            'Answer' => 'Milkyway chocolate bar'
+        ));
         $faq1->write();
         $this->assertNotEquals('', $faq1->getLink());
     }

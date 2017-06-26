@@ -80,7 +80,7 @@ class FAQPageTest extends FunctionalTest
 
         // check that page shows form
         $response = $this->get('faq-page-1');
-        $this->assertTrue(strpos($response->getBody(), 'id="FAQSearchForm_FAQSearchForm_Search"') !== false);
+        $this->assertContains('id="FAQSearchForm_FAQSearchForm_Search"', (string) $response->getBody());
     }
 
     /**
@@ -98,11 +98,11 @@ class FAQPageTest extends FunctionalTest
 
         // test page body, we have to get the Q and the A
         $response = $this->get('faq-page-1/view/1');
-        $this->assertTrue(strpos($response->getBody(), 'question 1') !== false);
-        $this->assertTrue(strpos($response->getBody(), 'Milkyway chocolate bar') !== false);
+        $this->assertContains('question 1', (string) $response->getBody());
+        $this->assertContains('Milkyway chocolate bar', (string) $response->getBody());
 
         $response = $this->get('faq-page-1/view/2');
-        $this->assertTrue(strpos($response->getBody(), 'No imagination question') !== false);
+        $this->assertContains('No imagination question', (string) $response->getBody());
     }
 
     /**
@@ -123,14 +123,14 @@ class FAQPageTest extends FunctionalTest
         Phockito::when($spy)->getSearchQuery(anything())->return(new SearchQuery());
         Phockito::when($spy)->doSearch(anything(), anything(), anything())->return(new ArrayData($mockResponse));
         $response = $spy->search();
-        $this->assertTrue($response['SearchSuggestion']['Suggestion'] === $mockResponse['Suggestion']);
+        $this->assertSame($mockResponse['Suggestion'], $response['SearchSuggestion']['Suggestion']);
 
         // testing error with solr
         $spy1 = Phockito::spy('FAQPage_Controller');
         Phockito::when($spy1)->getSearchQuery(anything())->return(new SearchQuery());
         Phockito::when($spy1)->doSearch(anything(), anything(), anything())->throw(new Exception("Some error"));
         $response = $spy1->search();
-        $this->assertTrue($response['SearchError'] === true);
+        $this->assertTrue($response['SearchError']);
     }
 
     /**
@@ -153,7 +153,7 @@ class FAQPageTest extends FunctionalTest
         Phockito::when($spy)->getSearchQuery(anything())->return(new SearchQuery());
         Phockito::when($spy)->doSearch(anything(), anything(), anything())->return(new ArrayData($mockResponse));
         $response = $spy->search();
-        $this->assertTrue($response['SearchResults']->getTotalItems() === 2);
+        $this->assertEquals(2, $response['SearchResults']->getTotalItems());
         $this->assertFalse($response['SearchResults']->MoreThanOnePage());
     }
 
@@ -164,12 +164,10 @@ class FAQPageTest extends FunctionalTest
     public function testFilterFeaturedFAQs()
     {
         // no category selected on FAQPage, show every featured FAQ
-        $featured = $this->_page->FilterFeaturedFAQs();
-        $this->assertTrue(count($featured) == count($this->_page->FeaturedFAQs()));
+        $this->assertCount($this->_page->FeaturedFAQs()->count(), $this->_page->FilterFeaturedFAQs());
 
         // category selected, only display one
-        $featured2 = $this->_page2->FilterFeaturedFAQs();
-        $this->assertTrue(count($featured2) == 1);
+        $this->assertCount(1, $this->_page2->FilterFeaturedFAQs());
     }
 
     /**
@@ -180,6 +178,6 @@ class FAQPageTest extends FunctionalTest
         $CategoryID = $this->objFromFixture('TaxonomyTerm', 'Vehicles')->getTaxonomy()->ID;
         $filterCategory = $this->_page2_controller->Categories()->filter('ID', $CategoryID)->first();
         $selectedChildIDS = $this->_page2_controller->getSelectedIDs($filterCategory);
-        $this->assertTrue($selectedChildIDS == array(1, 2, 4));
+        $this->assertEquals(array(1, 2, 4), $selectedChildIDS);
     }
 }
