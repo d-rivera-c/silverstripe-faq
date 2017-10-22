@@ -33,16 +33,16 @@ copy the `conf` folder into your project and change the path as noted in the con
 
 ```xml
 <lst name="spellchecker">
-	<str name="name">default</str>
-	<str name="field">_text</str>
+    <str name="name">default</str>
+    <str name="field">_text</str>
 ```
 
 to
 
 ```xml
 <lst name="spellchecker">
-	<str name="name">default</str>
-	<str name="field">_spellcheckText</str>
+    <str name="name">default</str>
+    <str name="field">_spellcheckText</str>
 ```
 
 And in the same folder (`conf`), locate `schema.ss` and add
@@ -55,12 +55,11 @@ It will end with something like this
 
 ```xml
 <fields>
-	$FieldDefinitions
+    $FieldDefinitions
 
-	<field name='_spellcheckText' type='textSpellHtml' indexed='true' stored='false' multiValued='true' />
-	<field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
+    <field name='_spellcheckText' type='textSpellHtml' indexed='true' stored='false' multiValued='true' />
+    <field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
 </fields>
 ```
 
 Do `Solr_Configure` and `Solr_Reindex`, and you should have FAQ module suggestion feature working like CWP.
-
