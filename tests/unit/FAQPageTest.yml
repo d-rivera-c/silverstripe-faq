@@ -1,11 +1,11 @@
 TaxonomyTerm:
-    Vehicles:
-        Name: Vehicles
-    Cars:
-        Name: Cars
-    Motorbikes:
-        Name: Motorbikes
-    Fords:
-        Name: Fords
-    Roads:
-        Name: Roads
+  Vehicles:
+    Name: Vehicles
+  Cars:
+    Name: Cars
+  Motorbikes:
+    Name: Motorbikes
+  Fords:
+    Name: Fords
+  Roads:
+    Name: Roads
