@@ -1,7 +1,7 @@
 {
     "name": "silverstripe/faq",
     "description": "Provides Q&A pages and Solr-based search",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "homepage": "https://github.com/silverstripe/silverstripe-faq",
     "keywords": ["silverstripe", "search", "faq", "solr"],
     "license": "BSD-3-Clause",
@@ -19,12 +19,12 @@
         }
     ],
     "require": {
-        "undefinedoffset/sortablegridfield": "^0.6.0",
-        "silverstripe/fulltextsearch": "^2.1.0",
-        "silverstripe/taxonomy": "^1.0"
+        "undefinedoffset/sortablegridfield": "^2.0",
+        "silverstripe/fulltextsearch": "^3.3",
+        "silverstripe/taxonomy": "^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*@stable",
+        "phpunit/phpunit": "^5.7",
         "hafriedlander/phockito": "dev-master"
     },
     "suggest": {
@@ -32,5 +32,7 @@
     },
     "extra": {
         "installer-name": "faq"
-    }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }
