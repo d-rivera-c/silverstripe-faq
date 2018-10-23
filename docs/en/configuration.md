@@ -21,7 +21,7 @@ FAQ:
   keywords_boost: '4'
 ```
 
-See `FAQPage_Controller` to check more configurations available.
+See `FAQPageController` to check more configurations available.
 
 ## CMS
 

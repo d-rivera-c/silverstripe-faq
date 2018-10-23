@@ -1,20 +1,26 @@
 <?php
+
+namespace SilverStripe\Faq\Admin;
+
+use SilverStripe\Dev\CsvBulkLoader;
+use SilverStripe\Faq\Model\Faq;
+
 /**
  * Extends Csv loader to handle Categories (Taxonomy DataObject) better.
  *
  */
 class FAQCsvBulkLoader extends CsvBulkLoader
 {
-    public $columnMap = array(
+    public $columnMap = [
         'Question' => 'Question',
-        'Answer' => 'Answer',
+        'Answer'   => 'Answer',
         'Keywords' => 'Keywords',
-        'Category' => '->getCategoryByName'
-    );
+        'Category' => '->getCategoryByName',
+    ];
 
-    public $duplicateChecks = array(
-        'Question' => 'Question'
-    );
+    public $duplicateChecks = [
+        'Question' => 'Question',
+    ];
 
     /**
      * Avoids creating new categories if not found in the root taxonomy
@@ -29,7 +35,7 @@ class FAQCsvBulkLoader extends CsvBulkLoader
             return null;
         }
 
-        $category = $root->getChildDeep(array('Name' => trim($val)));
+        $category = $root->getChildDeep(['Name' => trim($val)]);
 
         if ($category && $category->exists()) {
             $obj->CategoryID = $category->ID;

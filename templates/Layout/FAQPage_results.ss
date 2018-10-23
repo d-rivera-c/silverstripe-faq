@@ -19,7 +19,7 @@
         <% loop $SearchResults %>
             <% include FAQSearchResult %>
         <% end_loop %>
-        <% with SearchResults %>
+        <% with $SearchResults %>
             <% include Pagination %>
         <% end_with %>
     <% else %>
