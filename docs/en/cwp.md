@@ -2,8 +2,8 @@
 
 If your using the module with CWP, extra requirements should be noticed (even if not required on composer for this project)
 
- * CWP 1.1.1
- * CWP-core 1.1.2
+ * CWP 2.x
+ * CWP-core 2.x
 
 Also notice that some custom search configurations from CWP don't apply to FAQs out of the box.
 Manual configuration will need to be applied to make it resemble CWP conf.
@@ -20,7 +20,7 @@ feature).
 You need to add this code to your `config.yml`
 
 ```yaml
-FAQSearchIndex:
+SilverStripe\Faq\Search\FAQSearchIndex:
   copy_fields:
     - _text
     - _spellcheckText

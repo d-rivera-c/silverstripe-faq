@@ -1,4 +1,10 @@
 <?php
+
+namespace SilverStripe\Faq\Extensions;
+
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Taxonomy\TaxonomyTerm;
+
 /**
  * Extends {@link TaxonomyTerm} with useful functionality
  */
@@ -23,7 +29,9 @@ class FAQTaxonomyTermExtension extends DataExtension
      *
      * @param  array $find params to find a taxonomy
      * @param  array $create used if taxonomy could not be found with above params
+     *
      * @return TaxonomyTerm
+     * @throws \SilverStripe\ORM\ValidationException
      */
     public static function getOrCreate($find, $create)
     {

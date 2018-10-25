@@ -1,12 +1,11 @@
 ---
 Name: faq
-After: 'framework/*','cms/*'
 ---
-FAQSearchIndex:
+SilverStripe\Faq\Search\FAQSearchIndex:
   options:
     extraspath: '../faq/conf/extras'
     templatespath: '../faq/conf/templates'
     
-TaxonomyTerm:
+SilverStripe\Taxonomy\TaxonomyTerm:
   extensions:
-    - FAQTaxonomyTermExtension
+    - SilverStripe\Faq\Extensions\FAQTaxonomyTermExtension

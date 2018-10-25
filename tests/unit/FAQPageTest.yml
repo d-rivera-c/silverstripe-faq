@@ -1,4 +1,4 @@
-TaxonomyTerm:
+SilverStripe\Taxonomy\TaxonomyTerm:
   Vehicles:
     Name: Vehicles
   Cars:
@@ -9,3 +9,7 @@ TaxonomyTerm:
     Name: Fords
   Roads:
     Name: Roads
+
+SilverStripe\Faq\PageTypes\FAQPage:
+  faqpage:
+    Title: my faq page

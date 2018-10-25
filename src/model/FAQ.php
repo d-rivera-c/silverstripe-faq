@@ -1,4 +1,17 @@
 <?php
+
+namespace SilverStripe\Faq\Model;
+
+use SilverStripe\Control\Controller;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\Member;
+use SilverStripe\Taxonomy\TaxonomyTerm;
+use SilverStripe\Faq\Extensions\FAQTaxonomyTermExtension;
+
 /**
  * DataObject for a single FAQ related to the FAQ search module.
  * Provides db fields for a question and an answer.
@@ -7,24 +20,34 @@
  */
 class FAQ extends DataObject
 {
-    private static $db = array(
+    /**
+     * @var array
+     */
+    private static $db = [
         'Question' => 'Varchar(255)',
-        'Answer' => 'HTMLText',
-        'Keywords' => 'Text'
-    );
+        'Answer'   => 'HTMLText',
+        'Keywords' => 'Text',
+    ];
 
-    private static $summary_fields = array(
-        'Question' => 'Question',
+    /**
+     * @var array
+     */
+    private static $summary_fields = [
+        'Question'       => 'Question',
         'Answer.Summary' => 'Answer',
-        'Category.Name' => 'Category'
-    );
+        'Category.Name'  => 'Category',
+    ];
 
-    private static $has_one = array(
-        'Category' => 'TaxonomyTerm'
-    );
+    /**
+     * @var array
+     */
+    private static $has_one = [
+        'Category' => TaxonomyTerm::class,
+    ];
 
     /**
      * Search boost for questions.
+     *
      * @config
      * @var string
      */
@@ -32,6 +55,7 @@ class FAQ extends DataObject
 
     /**
      * Search boost for answer
+     *
      * @config
      * @var string
      */
@@ -39,6 +63,7 @@ class FAQ extends DataObject
 
     /**
      * Search boost for keywords
+     *
      * @config
      * @var string
      */
@@ -46,10 +71,16 @@ class FAQ extends DataObject
 
     /**
      * Name of the taxonomy to use for categories
+     *
      * @config
      * @var string
      */
     private static $taxonomy_name = 'FAQ Categories';
+
+    /**
+     * @var string
+     */
+    private static $table_name = "FAQ";
 
     /**
      * Add fields to manage FAQs.
@@ -66,7 +97,7 @@ class FAQ extends DataObject
         $categoryField = new TreeDropdownField(
             'CategoryID',
             'Category',
-            'TaxonomyTerm',
+            TaxonomyTerm::class,
             'ID',
             'Name'
         );
@@ -74,13 +105,31 @@ class FAQ extends DataObject
         $categoryField->setTreeBaseID($taxonomyRoot->ID);
         $categoryField->setDescription(sprintf(
             'Select one <a href="admin/taxonomy/TaxonomyTerm/EditForm/field/TaxonomyTerm/item/%d/#Root_Children">'
-                    . 'FAQ Category</a>',
+            . 'FAQ Category</a>',
             $taxonomyRoot->ID
         ));
         $fields->addFieldToTab('Root.Main', $categoryField);
 
         $this->extend('updateGetCMSFields', $fields);
         return $fields;
+    }
+
+    /**
+     * Gets the root category for the FAQs
+     * If it doesn't find it it creates it
+     *
+     * @return null|TaxonomyTerm root category of FAQs
+     */
+    public static function getRootCategory()
+    {
+        $taxName = Config::inst()->get(FAQ::class, 'taxonomy_name');
+
+        $root = FAQTaxonomyTermExtension::getOrCreate(
+            ['Name' => $taxName],
+            ['Name' => $taxName, 'ParentID' => 0]
+        );
+
+        return $root;
     }
 
     /**
@@ -93,12 +142,12 @@ class FAQ extends DataObject
         return new RequiredFields('Question', 'Answer');
     }
 
-
     /**
      * Filters items based on member permissions or other criteria,
      * such as if a state is generally available for the current record.
      *
      * @param Member $member
+     *
      * @return boolean
      */
     public function canView($member = null)
@@ -127,37 +176,5 @@ class FAQ extends DataObject
             "view/",
             $this->ID
         );
-    }
-
-    /**
-     * Gets all nested categories for FAQs
-     *
-     * @return ArrayList
-     */
-    public static function getAllCategories()
-    {
-        Deprecation::notice('2.0', 'getAllCategories is deprecated. Create extended function');
-        $taxName = Config::inst()->get('FAQ', 'taxonomy_name');
-        $root = FAQTaxonomyTermExtension::getOrCreate(
-            array('Name' => $taxName),
-            array('Name' => $taxName, 'ParentID' => 0)
-        );
-        return $root->Children();
-    }
-
-    /**
-     * Gets the root category for the FAQs
-     * If it doesn't find it it creates it
-     *
-     * @return null|TaxonomyTerm root category of FAQs
-     */
-    public static function getRootCategory()
-    {
-        $taxName = Config::inst()->get('FAQ', 'taxonomy_name');
-        $root = FAQTaxonomyTermExtension::getOrCreate(
-            array('Name' => $taxName),
-            array('Name' => $taxName, 'ParentID' => 0)
-        );
-        return $root;
     }
 }
