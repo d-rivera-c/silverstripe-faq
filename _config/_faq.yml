@@ -1,12 +1,16 @@
 ---
 Name: faq
-After: 'framework/*','cms/*'
 ---
 FAQSearchIndex:
   options:
     extraspath: '../faq/conf/extras'
     templatespath: '../faq/conf/templates'
-    
 TaxonomyTerm:
   extensions:
     - FAQTaxonomyTermExtension
+FAQResults:
+  extensions:
+    - FAQResults_Extension
+FAQResults_Article:
+  extensions:
+    - FAQResults_Extension

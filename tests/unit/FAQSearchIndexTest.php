@@ -5,12 +5,13 @@
  */
 class FAQSearchIndexTest extends SapphireTest
 {
+
     /**
      * Test escaping queries
      */
     public function testEscapeQuery()
     {
-        $this->assertSame('How did \: I get here\?', FAQSearchIndex::escapeQuery('How did : I get here?'));
+        $this->assertTrue(FAQSearchIndex::escapeQuery('How did : I get here?') === 'How did \: I get here\?');
     }
 
     /**
@@ -18,6 +19,6 @@ class FAQSearchIndexTest extends SapphireTest
      */
     public function testUnescapeQuery()
     {
-        $this->assertSame('How did : I get here?', FAQSearchIndex::unescapeQuery('How did \: I get here\?'));
+        $this->assertTrue(FAQSearchIndex::unescapeQuery('How did \: I get here\?') === 'How did : I get here?');
     }
 }

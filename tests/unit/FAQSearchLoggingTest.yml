@@ -1,0 +1,54 @@
+# ------------------------------------------
+# Pages
+# ------------------------------------------
+FAQPage:
+  faq:
+    Title: 'Search FAQ'
+
+# ------------------------------------------
+# FAQs
+# ------------------------------------------
+FAQ:
+  one:
+    Question: 'Question one'
+    Answer: 'Answer one'
+    Keywords: 'one, testing'
+
+# ------------------------------------------
+# Search logs
+# ------------------------------------------
+FAQSearch:
+  one:
+    Term: 'Dummy Search'
+    TotalResults: 20
+    SessionID: 12345
+FAQResults:
+  one:
+    SearchID: =>FAQSearch.one
+    SessionID: 12345
+
+# ------------------------------------------
+# Groups
+# ------------------------------------------
+Group:
+  admin:
+    Title: Administrators
+
+# ------------------------------------------
+# Members
+# ------------------------------------------
+Member:
+  admin:
+    FirstName: Admin
+    Surname: Admin
+    Email: admin@test.com
+    Password: password
+    Groups: =>Group.admin
+
+# ------------------------------------------
+# Permissions
+# ------------------------------------------
+Permission:
+   admin:
+    Code: ADMIN
+    GroupID: =>Group.admin

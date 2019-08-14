@@ -1,8 +1,8 @@
 {
-    "name": "silverstripe/faq",
+    "name": "dia-nz/silverstripe-faq",
     "description": "Provides Q&A pages and Solr-based search",
     "type": "silverstripe-module",
-    "homepage": "https://github.com/silverstripe/silverstripe-faq",
+    "homepage": "https://github.com/dia-nz/faq",
     "keywords": ["silverstripe", "search", "faq", "solr"],
     "license": "BSD-3-Clause",
     "support": {
@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "undefinedoffset/sortablegridfield": "^0.6.0",
+        "undefinedoffset/sortablegridfield": "*",
         "silverstripe/fulltextsearch": "^2.1.0",
         "silverstripe/taxonomy": "^1.0"
     },

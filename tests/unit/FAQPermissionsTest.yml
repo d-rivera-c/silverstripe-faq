@@ -1,0 +1,87 @@
+# ------------------------------------------
+# Pages
+# ------------------------------------------
+FAQPage:
+  faq:
+    Title: 'Search FAQ'
+
+# ------------------------------------------
+# FAQs
+# ------------------------------------------
+FAQ:
+  one:
+    Question: 'Question one'
+    Answer: 'Answer one'
+    Keywords: 'one, testing'
+
+# ------------------------------------------
+# Search logs
+# ------------------------------------------
+FAQSearch:
+  one:
+    Term: 'First search'
+    TotalResults: 20
+FAQResults:
+  one:
+    SearchID: =>FAQSearch.one
+FAQResults_Article:
+  one:
+    SearchID: =>FAQSearch.one
+
+# ------------------------------------------
+# Groups
+# ------------------------------------------
+Group:
+  admin:
+    Title: Administrators
+  contentAuthors:
+    Title: Content Authors
+    Code: content-authors
+
+# ------------------------------------------
+# Members
+# ------------------------------------------
+Member:
+  admin:
+    FirstName: Admin
+    Surname: Admin
+    Email: admin@test.com
+    Password: password
+    Groups: =>Group.admin
+  contentAuthor:
+    FirstName: 'Penelope'
+    Surname: 'Creighton-Ward'
+    Email: penny@example.com
+    Password: password
+    Groups: =>Group.contentAuthors
+  noPerms:
+    FirstName: 'Aloysius',
+    Surname: 'Parker'
+    Email: butler@example.com
+    Password: password
+
+# ------------------------------------------
+# Permissions
+# ------------------------------------------
+Permission:
+   admin:
+    Code: ADMIN
+    GroupID: =>Group.admin
+  editFAQs:
+    Code: FAQ_EDIT
+    GroupID: =>Group.contentAuthors
+  deleteFAQs:
+    Code: FAQ_DELETE
+    GroupID: =>Group.contentAuthors
+  createFAQs:
+    Code: FAQ_CREATE
+    GroupID: =>Group.contentAuthors
+  viewLogs:
+    Code: FAQ_VIEW_SEARCH_LOGS
+    GroupID: =>Group.contentAuthors
+  editLogs:
+    Code: FAQ_EDIT_SEARCH_LOGS
+    GroupID: =>Group.contentAuthors
+  deleteLogs:
+    Code: FAQ_DELETE_SEARCH_LOGS
+    GroupID: =>Group.contentAuthors

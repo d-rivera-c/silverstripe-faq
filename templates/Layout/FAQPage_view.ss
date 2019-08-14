@@ -1,2 +1,6 @@
 <h1>$FAQ.Question</h1>
-<p>$FAQ.Answer</p>
+
+<p>$FAQ.Answer.RichLinks</p>
+
+$FAQRatingForm
+

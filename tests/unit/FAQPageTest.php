@@ -2,8 +2,12 @@
 /**
  * Tests basic functionality of FAQPage
  */
+
+ use SilverStripe\View\ArrayData;
+
 class FAQPageTest extends FunctionalTest
 {
+
     protected static $fixture_file = 'FAQPageTest.yml';
 
     protected $_page = null;
@@ -11,6 +15,9 @@ class FAQPageTest extends FunctionalTest
     protected $faq1 = null;
     protected $faq2 = null;
 
+    /**
+     *
+     */
     public function setUp()
     {
         parent::setUp();
@@ -80,7 +87,7 @@ class FAQPageTest extends FunctionalTest
 
         // check that page shows form
         $response = $this->get('faq-page-1');
-        $this->assertContains('id="FAQSearchForm_FAQSearchForm_Search"', (string) $response->getBody());
+        $this->assertTrue(strpos($response->getBody(), 'id="FAQSearchForm_FAQSearchForm_Search"') !== false);
     }
 
     /**
@@ -89,6 +96,7 @@ class FAQPageTest extends FunctionalTest
      */
     public function testView()
     {
+
         // test routing
         $page = $this->get('faq-page-1/view/1');
         $this->assertEquals(200, $page->getStatusCode());
@@ -96,13 +104,20 @@ class FAQPageTest extends FunctionalTest
         $page = $this->get('faq-page-1/view/665');
         $this->assertEquals(404, $page->getStatusCode());
 
-        // test page body, we have to get the Q and the A
-        $response = $this->get('faq-page-1/view/1');
-        $this->assertContains('question 1', (string) $response->getBody());
-        $this->assertContains('Milkyway chocolate bar', (string) $response->getBody());
+        // Ensure requests retrieve the correct FAQ
+        $request = new SS_HTTPRequest('GET', 'faq-page-1/view/1');
+        $request->setRouteParams(array('ID' => 1));
+        $result = $this->controller->view($request);
 
-        $response = $this->get('faq-page-1/view/2');
-        $this->assertContains('No imagination question', (string) $response->getBody());
+        $this->assertEquals($result['FAQ']->Question, 'question 1');
+        $this->assertEquals($result['FAQ']->Answer, 'Milkyway chocolate bar');
+
+        $request = new SS_HTTPRequest('GET', 'faq-page-1/view/2');
+        $request->setRouteParams(array('ID' => 2));
+        $result = $this->controller->view($request);
+
+        $this->assertEquals($result['FAQ']->Question, 'No imagination question');
+        $this->assertEquals($result['FAQ']->Answer, '42');
     }
 
     /**
@@ -123,14 +138,14 @@ class FAQPageTest extends FunctionalTest
         Phockito::when($spy)->getSearchQuery(anything())->return(new SearchQuery());
         Phockito::when($spy)->doSearch(anything(), anything(), anything())->return(new ArrayData($mockResponse));
         $response = $spy->search();
-        $this->assertSame($mockResponse['Suggestion'], $response['SearchSuggestion']['Suggestion']);
+        $this->assertTrue($response['SearchSuggestion']['Suggestion'] === $mockResponse['Suggestion']);
 
         // testing error with solr
         $spy1 = Phockito::spy('FAQPage_Controller');
         Phockito::when($spy1)->getSearchQuery(anything())->return(new SearchQuery());
         Phockito::when($spy1)->doSearch(anything(), anything(), anything())->throw(new Exception("Some error"));
         $response = $spy1->search();
-        $this->assertTrue($response['SearchError']);
+        $this->assertTrue($response['SearchError'] === true);
     }
 
     /**
@@ -153,7 +168,7 @@ class FAQPageTest extends FunctionalTest
         Phockito::when($spy)->getSearchQuery(anything())->return(new SearchQuery());
         Phockito::when($spy)->doSearch(anything(), anything(), anything())->return(new ArrayData($mockResponse));
         $response = $spy->search();
-        $this->assertEquals(2, $response['SearchResults']->getTotalItems());
+        $this->assertTrue($response['SearchResults']->getTotalItems() === 2);
         $this->assertFalse($response['SearchResults']->MoreThanOnePage());
     }
 
@@ -164,10 +179,12 @@ class FAQPageTest extends FunctionalTest
     public function testFilterFeaturedFAQs()
     {
         // no category selected on FAQPage, show every featured FAQ
-        $this->assertCount($this->_page->FeaturedFAQs()->count(), $this->_page->FilterFeaturedFAQs());
+        $featured = $this->_page->FilterFeaturedFAQs();
+        $this->assertTrue(count($featured) == count($this->_page->FeaturedFAQs()));
 
         // category selected, only display one
-        $this->assertCount(1, $this->_page2->FilterFeaturedFAQs());
+        $featured2 = $this->_page2->FilterFeaturedFAQs();
+        $this->assertTrue(count($featured2) == 1);
     }
 
     /**
@@ -178,6 +195,6 @@ class FAQPageTest extends FunctionalTest
         $CategoryID = $this->objFromFixture('TaxonomyTerm', 'Vehicles')->getTaxonomy()->ID;
         $filterCategory = $this->_page2_controller->Categories()->filter('ID', $CategoryID)->first();
         $selectedChildIDS = $this->_page2_controller->getSelectedIDs($filterCategory);
-        $this->assertEquals(array(1, 2, 4), $selectedChildIDS);
+        $this->assertTrue($selectedChildIDS == array(1, 2, 4));
     }
 }

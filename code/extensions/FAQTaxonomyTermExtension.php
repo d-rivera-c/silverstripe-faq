@@ -2,13 +2,17 @@
 /**
  * Extends {@link TaxonomyTerm} with useful functionality
  */
+
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Taxonomy\TaxonomyTerm;
+
 class FAQTaxonomyTermExtension extends DataExtension
 {
+
     /**
      * Get's a taxonomy by name
-     *
-     * @param  string $name of the taxonomy to search for
-     * @return TaxonomyTerm
+  *
+     * @param string $name of the taxonomy to search for
      */
     public static function getByName($name)
     {
@@ -16,14 +20,14 @@ class FAQTaxonomyTermExtension extends DataExtension
         if ($taxonomy && $taxonomy->exists()) {
             return $taxonomy;
         }
+        return null;
     }
 
     /**
      * Finds or creates a taxonomy.
-     *
-     * @param  array $find params to find a taxonomy
-     * @param  array $create used if taxonomy could not be found with above params
-     * @return TaxonomyTerm
+  *
+     * @param array $find   params to find a taxonomy
+     * @param array $create used if taxonomy could not be found with above params
      */
     public static function getOrCreate($find, $create)
     {
@@ -32,7 +36,6 @@ class FAQTaxonomyTermExtension extends DataExtension
             $taxonomy = new TaxonomyTerm($create);
             $taxonomy->write();
         }
-
         return $taxonomy;
     }
 
@@ -41,15 +44,14 @@ class FAQTaxonomyTermExtension extends DataExtension
      * Traverses through the whole tree of taxonomies, filtering by $filter.
      * Gets the first taxonomy that matches the filters
      *
-     * @param  array $filter
-     * @return TaxonomyTerm Owner of the extension
+     * @param array $filter
      */
     public function getChildDeep(array $filter)
     {
         // check if this matches filter
         $match = true;
         foreach ($filter as $key => $value) {
-            if (isset($this->owner->$key) && $this->owner->$key != $value) {
+            if (isset($this->owner->$key) && strtolower($this->owner->$key) != strtolower($value)) {
                 $match = false;
             }
         }
@@ -65,5 +67,6 @@ class FAQTaxonomyTermExtension extends DataExtension
                 return $response;
             }
         }
+        return null;
     }
 }
