@@ -20,7 +20,7 @@
     ],
     "require": {
         "undefinedoffset/sortablegridfield": "*",
-        "silverstripe/fulltextsearch": "^2.1.0",
+        "silverstripe/fulltextsearch": "^3.5.2",
         "silverstripe/taxonomy": "^1.0"
     },
     "require-dev": {
