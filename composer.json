@@ -21,7 +21,7 @@
     "require": {
         "undefinedoffset/sortablegridfield": "*",
         "silverstripe/fulltextsearch": "^3.5.2",
-        "silverstripe/taxonomy": "^1.0"
+        "silverstripe/taxonomy": "^2.0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*@stable",
