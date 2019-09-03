@@ -18,11 +18,13 @@ use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\Security\Permission;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordViewer;
+use SilverStripe\Versioned\Versioned;
+use SilverStripe\Versioned\VersionedGridFieldItemRequest;
 
 class FAQ extends DataObject implements PermissionProvider
 {
-
     private static $singular_name = 'FAQ';
 
     private static $db = array(
@@ -45,6 +47,11 @@ class FAQ extends DataObject implements PermissionProvider
     private static $has_many = array(
         'Views' => 'FAQResults_Article'
     );
+
+    private static $extensions = [
+        Versioned::class,
+        FAQExtension::class
+    ];
 
     /**
      * Search boost defaults for fields.
@@ -124,13 +131,15 @@ class FAQ extends DataObject implements PermissionProvider
             'Question'
         );
 
+        $config = GridFieldConfig_RecordViewer::create();
+        $config->getComponentByType(GridFieldDetailForm::class)->setItemRequestClass(VersionedGridFieldItemRequest::class);
         $fields->addFieldsToTab('Root.Views', array(
             ReadonlyField::create('TotalViews', 'Total Views', $this->TotalViews),
             GridField::create(
                 'Views',
                 'Views',
                 $this->Views(),
-                GridFieldConfig_RecordViewer::create()
+                $config
             )
         ));
 
@@ -158,7 +167,7 @@ class FAQ extends DataObject implements PermissionProvider
         $faqPage = FAQPage::get()->first();
         $link = '';
 
-        if ($faqPage->exists() && $this->ID != 0) {
+        if ($faqPage && $faqPage->exists() && $this->ID != 0) {
             // Include tracking ID if it is set
             if (isset($this->trackingID) && $this->trackingID) {
                 $link = Controller::join_links(
@@ -253,6 +262,26 @@ class FAQ extends DataObject implements PermissionProvider
     public function canCreate($member = null, $context = array())
     {
         return Permission::check('FAQ_CREATE');
+    }
+
+    public function canPublish($member = null)
+    {
+        return true;
+    }
+
+    public function canUnpublish($member = null)
+    {
+        return true;
+    }
+
+    public function canArchive($member = null)
+    {
+        return true;
+    }
+
+    public function canViewVersioned($member = null)
+    {
+        return true;
     }
 
     public function providePermissions()

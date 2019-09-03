@@ -9,6 +9,15 @@ use SilverStripe\Security\PermissionProvider;
 use SilverStripe\ORM\Search\SearchContext;
 use SilverStripe\Forms\DateField;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridFieldConfig;
+use SilverStripe\Forms\GridField\GridFieldSortableHeader;
+use SilverStripe\Forms\GridField\GridFieldButtonRow;
+use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridFieldFooter;
+use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\ORM\Filters\LessThanFilter;
 use SilverStripe\ORM\Filters\GreaterThanOrEqualFilter;
 use SilverStripe\Security\Permission;
@@ -98,7 +107,7 @@ class FAQSearch extends DataObject implements PermissionProvider
     public function getDefaultSearchContext()
     {
         $fields = $this->scaffoldSearchFields();
-        $filters = $this->defaultSearchFilters();
+        $filters = []; // $this->defaultSearchFilters()
 
         return new FAQSearch_SearchContext(
             $this->class,

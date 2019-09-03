@@ -69,7 +69,8 @@ class FAQPage extends Page
 
     private static $description = 'FAQ search page';
 
-
+    private static $versioned_gridfield_extensions = true;
+    
     /**
      *
      */

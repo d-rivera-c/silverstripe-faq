@@ -9,8 +9,18 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\GridField\GridFieldEditButton;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use SilverStripe\Forms\GridField\GridFieldSortableHeader;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig;
+use SilverStripe\Forms\GridField\GridFieldButtonRow;
+use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
+use SilverStripe\Forms\GridField\GridFieldFooter;
+
 use SilverStripe\View\ArrayData;
 use SilverStripe\Security\Permission;
+use SilverStripe\Control\Controller;
+use SilverStripe\Forms\ReadonlyField;
 
 class FAQResults_Extension extends Extension
 {
@@ -83,14 +93,14 @@ class FAQResults extends DataObject
     );
 
     private static $summary_fields = array(
-        'getArticlesViewedIDs' => 'Articles viewed',
+        'ArticlesViewedIDs' => 'Articles viewed',
         'Created.Nice' => 'Date viewed',
-        'getArticleIDs' => 'Articles displayed in results',
+        'ArticleIDs' => 'Articles displayed in results',
         'SetSize' => 'Total displayed'
     );
 
     /**
-     * Get IDs of articles in this set
+     * Get IDs of articles in this set 
      *
      * @return string Comma separated list of IDs
      */
@@ -99,7 +109,7 @@ class FAQResults extends DataObject
         return trim($this->ArticleSet, '[]');
     }
 
-    /**
+    /*
      * Get articles that were actually viewed from this set.
      *
      * @return string Comma separated list of IDs
@@ -265,7 +275,7 @@ class FAQResults_Article_EditButton extends GridFieldEditButton
             $data = new ArrayData(array(
                 'Link' => Controller::join_links($gridField->Link('item'), $record->FAQID, 'edit')
             ));
-            return $data->renderWith('GridFieldEditButton');
+            return $data->renderWith('SilverStripe\Forms\GridField\GridFieldEditButton');
         }
     }
 }
